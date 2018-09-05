@@ -1,13 +1,13 @@
 package org.githup.es.service.impl;
 
-import java.util.Map;
+import java.util.List;
 
-import org.githup.es.dao.ESRepository;
-import org.githup.es.service.ESSearchService;
+import org.githup.es.dao.ESAggsRepository;
+import org.githup.es.model.EsBasicSearchParam;
+import org.githup.es.page.BootstrapTablePaginationVo;
+import org.githup.es.service.ESAggsSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.alibaba.fastjson.JSONObject;
 
 /**
  * ES具体实现类
@@ -18,49 +18,15 @@ import com.alibaba.fastjson.JSONObject;
  *
  */
 @Service
-public class ESSearchServiceImpl implements ESSearchService{
+public class ESSearchServiceImpl implements ESAggsSearchService{
 
 	@Autowired
-	private ESRepository eSRepository;
+	private ESAggsRepository esAggsRepository;
+
+	@Override
+	public BootstrapTablePaginationVo<String> searchMsgByParam(EsBasicSearchParam param) throws Exception {
+		return esAggsRepository.searchMsgByParam(param);
+	}
 	
-	@Override
-	public boolean buildIndex(String index) {
-		return eSRepository.buildIndex(index);
-	}
-
-	@Override
-	public boolean delIndex(String index) {
-		return eSRepository.deleteIndex(index);
-	}
-
-	@Override
-	public Map<String, Object> searchDataByParam(String index, String type, String id) {
-		// TODO Auto-generated method stub
-		return eSRepository.searchDataByParam(index, type, id);
-	}
-
-	@Override
-	public void updateDataById(JSONObject data, String index, String type, String id) {
-		// TODO Auto-generated method stub
-		eSRepository.updateDataById(data, index, type, id);
-	}
-
-	@Override
-	public String addTargetDataALL(JSONObject data, String index, String type, String id) {
-		// TODO Auto-generated method stub
-		return eSRepository.addTargetDataALL(data, index, type, id);
-	}
-
-	@Override
-	public void delDataById(String index, String type, String id) {
-		// TODO Auto-generated method stub
-		eSRepository.delDataById(index, type, id);
-	}
-
-	@Override
-	public boolean isIndexExist(String index) {
-		// TODO Auto-generated method stub
-		return eSRepository.isIndexExist(index);
-	}
-
+	
 }

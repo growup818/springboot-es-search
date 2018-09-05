@@ -19,4 +19,5 @@ public class SpringBootEsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootEsApplication.class, args);
 	}
+	
 }

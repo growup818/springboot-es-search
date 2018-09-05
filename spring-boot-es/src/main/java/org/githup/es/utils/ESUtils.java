@@ -20,6 +20,6 @@ public class ESUtils {
     @Autowired
     private TransportClient transportClient;
 
-    
+    //测试类
 
 }
