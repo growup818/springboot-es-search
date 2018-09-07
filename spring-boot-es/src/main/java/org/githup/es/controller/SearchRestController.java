@@ -5,9 +5,9 @@ import java.util.Map;
 
 import org.githup.es.constants.ESWebStatusEnum;
 import org.githup.es.constants.ResponseVo;
-import org.githup.es.model.EsBasicSearchParam;
 import org.githup.es.model.SuggestModel;
 import org.githup.es.page.BootstrapTablePaginationVo;
+import org.githup.es.param.BasicSearchParam;
 import org.githup.es.service.ESAggsSearchService;
 import org.githup.es.service.ESSearchService;
 import org.githup.es.service.ESSuggestSearchService;
@@ -69,7 +69,7 @@ public class SearchRestController extends BaseController{
 		return generateResponseVo(ESWebStatusEnum.SUCCESS, null);
 	}
 	
-	@RequestMapping(value = "/delIndex")
+	/*@RequestMapping(value = "/delIndex")
 	public ResponseVo<?> delIndex(
 			) {
 		
@@ -93,7 +93,7 @@ public class SearchRestController extends BaseController{
 		}
 		
 		return generateResponseVo(ESWebStatusEnum.SUCCESS, null);
-	}
+	}*/
 	
 	/**
 	 *  查询数据
@@ -218,7 +218,7 @@ public class SearchRestController extends BaseController{
 			) throws Exception {
 		//搜索具体的数据来源
 		
-		EsBasicSearchParam param = new EsBasicSearchParam();
+		BasicSearchParam param = new BasicSearchParam();
 		param.setIndex("bbs_post_index");
 		param.setField("content");
 		param.setDistictField("id");

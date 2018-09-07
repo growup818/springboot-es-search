@@ -1,21 +1,15 @@
 package org.githup.es.service.impl;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.elasticsearch.action.get.MultiGetItemResponse;
-import org.elasticsearch.action.get.MultiGetRequest.Item;
+import org.githup.es.dao.ESAggsRepository;
 import org.githup.es.dao.ESRepository;
-import org.githup.es.model.EsBasicSearchParam;
-import org.githup.es.service.ESSearchService;
+import org.githup.es.page.BootstrapTablePaginationVo;
+import org.githup.es.param.BasicSearchParam;
+import org.githup.es.service.ESAggsSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSONObject;
-
 /**
- * ES具体实现类
+ * ES分类，Agg统计信息
  * 
  * 备注：抽出ES的分类信息
  * 
@@ -23,82 +17,17 @@ import com.alibaba.fastjson.JSONObject;
  *
  */
 @Service
-public class ESAggsSearchImpl implements ESSearchService{
+public class ESAggsSearchImpl implements ESAggsSearchService {
 
 	@Autowired
 	private ESRepository eSRepository;
 	
-	@Override
-	public String addJSONDataDoc(String index, String type, Object obj) throws Exception {
-		// TODO Auto-generated method stub
-		return eSRepository.addJSONDataDoc(index, type, obj);
-	}
+	@Autowired
+	private ESAggsRepository eSAggsRepository;
 
 	@Override
-	public int addPostDataDoc(String postId, String postContent) throws Exception {
-		// TODO Auto-generated method stub
-		return eSRepository.addPostDataDoc(postId, postContent);
+	public BootstrapTablePaginationVo<String> searchMsgByParam(BasicSearchParam param) throws Exception {
+		return eSAggsRepository.searchMsgByParam(param);
 	}
 
-	@Override
-	public void matchQuery(String keyWord, String index, int limit, int offset) throws Exception {
-		// TODO Auto-generated method stub
-		eSRepository.matchQuery(keyWord, index, limit, offset);
-	}
-
-	@Override
-	public boolean buildIndex(String index) {
-		return eSRepository.buildIndex(index);
-	}
-
-	@Override
-	public boolean delIndex(String index) {
-		return eSRepository.deleteIndex(index);
-	}
-
-	@Override
-	public Map<String, Object> searchDataByParam(String index, String type, String id) {
-		return eSRepository.searchDataByParam(index, type, id);
-	}
-
-	@Override
-	public void updateDataById(JSONObject data, String index, String type, String id) {
-		eSRepository.updateDataById(data, index, type, id);
-	}
-
-	@Override
-	public String addTargetDataALL(JSONObject data, String index, String type, String id) {
-		return eSRepository.addTargetDataALL(data, index, type, id);
-	}
-
-	@Override
-	public void delDataById(String index, String type, String id) {
-		eSRepository.delDataById(index, type, id);
-	}
-
-	@Override
-	public boolean isIndexExist(String index) {
-		return eSRepository.isIndexExist(index);
-	}
-
-	@Override
-	public Iterator<MultiGetItemResponse> multiGetData(List<Item> itemList) {
-		return eSRepository.multiGetData(itemList);
-	}
-
-	@Override
-	public List<String> searchMessageByKeyWord(String index, String filed, String keyWord, int limit, int offset) throws Exception {
-		return eSRepository.searchMessageByKeyWord(index,filed, keyWord, limit, offset);
-	}
-
-	@Override
-	public List<String> searchMsgByParam(EsBasicSearchParam param) throws Exception {
-		return eSRepository.searchMsgByParam(param);
-	}
-
-	@Override
-	public Long searchMsgCountByParam(EsBasicSearchParam param) throws Exception {
-		return eSRepository.searchMsgCountByParam(param);
-	}
-	
 }

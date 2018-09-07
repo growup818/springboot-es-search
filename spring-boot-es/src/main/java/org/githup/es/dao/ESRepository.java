@@ -33,7 +33,7 @@ import org.elasticsearch.index.query.TermsQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.collapse.CollapseBuilder;
-import org.githup.es.model.EsBasicSearchParam;
+import org.githup.es.param.BasicSearchParam;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,7 +77,7 @@ public class ESRepository extends BaseRepository{
 	 * @return
 	 * @throws Exception
 	 */
-	public List<String> searchMsgByParam(EsBasicSearchParam param) throws Exception {
+	public List<String> searchMsgByParam(BasicSearchParam param) throws Exception {
 		String keyWord = param.getKeyWord();
 		String filed = param.getField();
 		String index = param.getIndex();
@@ -120,7 +120,7 @@ public class ESRepository extends BaseRepository{
 	 * @return
 	 * @throws Exception
 	 */
-	public Long searchMsgCountByParam(EsBasicSearchParam param) throws Exception {
+	public Long searchMsgCountByParam(BasicSearchParam param) throws Exception {
 		String keyWord = param.getKeyWord();
 		String filed = param.getField();
 		String index = param.getIndex();
@@ -343,28 +343,6 @@ public class ESRepository extends BaseRepository{
     } 
 
 	/**
-	 * 通过ID删除数据
-	 *
-	 * @param index
-	 *            索引，类似数据库
-	 * @param type
-	 *            类型，类似表
-	 * @param id
-	 *            数据ID
-	 */
-	public void delDataById(String index, String type, String id) {
-
-		if (index == null || type == null || id == null) {
-			LOG.info(" 无法删除数据，缺唯一值!!!!!!! ");
-			return;
-		}
-		// 开始删除数据
-		DeleteResponse response = client.prepareDelete(index, type, id).execute().actionGet();
-
-		LOG.info("删除数据状态，status-->>>>{},", response.status().getStatus());
-	}
-
-	/**
 	 * 判断索引是否存在
 	 *
 	 * @param index
@@ -413,7 +391,7 @@ public class ESRepository extends BaseRepository{
 	 * @return
 	 */
 	public List<String> search_IdByKeyWord(String index, String filed, String keyWord, int limit, int offset) {  
-		LOG.info("es serarch index->" + index + ",filed->" + filed + ",keyWord->" + keyWord);
+		LOG.debug("es serarch index->" + index + ",filed->" + filed + ",keyWord->" + keyWord);
     	Assert.assertNotNull(client);
     	Assert.assertNotNull(index);
     	Assert.assertNotNull(keyWord);

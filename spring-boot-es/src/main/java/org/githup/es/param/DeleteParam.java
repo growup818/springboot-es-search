@@ -1,14 +1,14 @@
-package org.githup.es.model;
+package org.githup.es.param;
 
 import java.io.Serializable;
 
 /***
- * es搜索参数格式化
+ * delete查询参数化
  * 
  * @author shangdc
  *
  */
-public class EsBasicSearchParam implements Serializable {
+public class DeleteParam implements Serializable {
 
 	/**
 	 * 
@@ -31,19 +31,14 @@ public class EsBasicSearchParam implements Serializable {
 	private String index;
 
 	/**
-	 * 去重字段
+	 * es索引唯一标识id
 	 */
-	private String distictField;
+	private String id;
 
 	/**
-	 * 分页参数
+	 * type类型
 	 */
-	private Integer limit = 10;
-
-	/**
-	 * 分页参数
-	 */
-	private Integer offset = 0;
+	private String type;
 
 	public String getKeyWord() {
 		return keyWord;
@@ -69,28 +64,20 @@ public class EsBasicSearchParam implements Serializable {
 		this.index = index;
 	}
 
-	public Integer getLimit() {
-		return limit;
+	public String getId() {
+		return id;
 	}
 
-	public void setLimit(Integer limit) {
-		this.limit = limit;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public Integer getOffset() {
-		return offset;
+	public String getType() {
+		return type;
 	}
 
-	public void setOffset(Integer offset) {
-		this.offset = offset;
-	}
-
-	public String getDistictField() {
-		return distictField;
-	}
-
-	public void setDistictField(String distictField) {
-		this.distictField = distictField;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }

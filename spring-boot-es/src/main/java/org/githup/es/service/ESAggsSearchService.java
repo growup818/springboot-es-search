@@ -2,8 +2,8 @@ package org.githup.es.service;
 
 import java.util.List;
 
-import org.githup.es.model.EsBasicSearchParam;
 import org.githup.es.page.BootstrapTablePaginationVo;
+import org.githup.es.param.BasicSearchParam;
 
 /**
  * ES服务端
@@ -19,6 +19,6 @@ public interface ESAggsSearchService {
 	 * @return
 	 * @throws Exception
 	 */
-	public BootstrapTablePaginationVo<String> searchMsgByParam(EsBasicSearchParam param) throws Exception;
+	public BootstrapTablePaginationVo<String> searchMsgByParam(BasicSearchParam param) throws Exception;
     
 }

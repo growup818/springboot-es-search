@@ -15,8 +15,8 @@ import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.metrics.NumericMetricsAggregation.SingleValue;
 import org.elasticsearch.search.aggregations.metrics.cardinality.CardinalityAggregationBuilder;
 import org.elasticsearch.search.collapse.CollapseBuilder;
-import org.githup.es.model.EsBasicSearchParam;
 import org.githup.es.page.BootstrapTablePaginationVo;
+import org.githup.es.param.BasicSearchParam;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +46,7 @@ public class ESAggsRepository extends BaseRepository {
 	 * @return
 	 * @throws Exception
 	 */
-	public BootstrapTablePaginationVo<String> searchMsgByParam(EsBasicSearchParam param) throws Exception {
+	public BootstrapTablePaginationVo<String> searchMsgByParam(BasicSearchParam param) throws Exception {
 		String keyWord = param.getKeyWord();
 		String filed = param.getField();
 		String index = param.getIndex();

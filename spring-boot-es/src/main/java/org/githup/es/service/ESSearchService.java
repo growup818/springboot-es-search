@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.elasticsearch.action.get.MultiGetItemResponse;
 import org.elasticsearch.action.get.MultiGetRequest.Item;
-import org.githup.es.model.EsBasicSearchParam;
+import org.githup.es.param.BasicSearchParam;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -25,13 +25,6 @@ public interface ESSearchService {
 	 */
 	public boolean buildIndex(String index);
 	
-	/**
-	 * 删除索引
-	 * @param index
-	 * @return
-	 */
-    public boolean delIndex(String index);
-    
     /**
      * 增加内容
      * @param postId
@@ -71,17 +64,6 @@ public interface ESSearchService {
     public Map<String, Object> searchDataByParam(String index, String type, String id);
     
     /**
-     * 更新数据
-     *
-     * @param data  添加的数据类型 json格式的
-     * @param index 索引<----->关系型数据库
-     * @param type  类型<----->关系型数据表
-     * @param id    数据ID<----->id
-     * @return
-     */
-    public void updateDataById(JSONObject data, String index, String type, String id);
-    
-    /**
      * 添加数据
      *
      * @param data  添加的数据类型 json格式的
@@ -91,15 +73,6 @@ public interface ESSearchService {
      * @return
      */
     public String addTargetDataALL(JSONObject data, String index, String type, String id);
-    
-    /**
-     * 通过ID删除数据
-     *
-     * @param index 索引，类似数据库
-     * @param type  类型，类似表
-     * @param id    数据ID
-     */
-    public void delDataById(String index, String type, String id);
     
     /**
 	 * 判断索引是否存在
@@ -132,7 +105,7 @@ public interface ESSearchService {
      * @return
      * @throws Exception
      */
-    public List<String> searchMsgByParam(EsBasicSearchParam param) throws Exception;
+    public List<String> searchMsgByParam(BasicSearchParam param) throws Exception;
     
     /**
      * 查询总数
@@ -140,6 +113,6 @@ public interface ESSearchService {
      * @return
      * @throws Exception
      */
-    public Long searchMsgCountByParam(EsBasicSearchParam param) throws Exception;
+    public Long searchMsgCountByParam(BasicSearchParam param) throws Exception;
     
 }
