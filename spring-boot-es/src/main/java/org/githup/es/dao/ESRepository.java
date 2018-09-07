@@ -9,7 +9,6 @@ import java.util.UUID;
 
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequest;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
-import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetRequestBuilder;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.get.MultiGetItemResponse;
@@ -112,7 +111,6 @@ public class ESRepository extends BaseRepository{
         }  
 		return responseStrList;
 	}
-	
 	
 	/**
 	 * 搜索
@@ -423,12 +421,8 @@ public class ESRepository extends BaseRepository{
     	Assert.assertNotNull(keyWord);
     	List<String> responseStrList = new ArrayList<String>();
     	TermsQueryBuilder termsQueryBuilder = QueryBuilders.termsQuery(filed, keyWord);
-//		MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery(filed, keyWord);
 		
-//		TermQueryBuilder termQueryBuilder1 = QueryBuilders.termQuery(filed, keyWord);
-//		TermQueryBuilder termQueryBuilder2 = QueryBuilders.termQuery("userId", "251");
-//		QueryBuilder finalQueryBuilder = QueryBuilders.boolQuery().must(termQueryBuilder1).must(termQueryBuilder2);
-		
+    	//查询信息
 		SearchResponse response = client.prepareSearch(index).setQuery(termsQueryBuilder).setFrom(offset).setSize(limit).get();
         for (SearchHit searchHit : response.getHits()) {  
         	responseStrList.add(searchHit.getSourceAsString());
@@ -487,7 +481,7 @@ public class ESRepository extends BaseRepository{
     			finalQueryBuilder = QueryBuilders.boolQuery().must(termQueryBuilder1);
     		}
     	}
-//    	client.prepareSearch(index).setQuery(finalQueryBuilder).get().getHits().totalHits;
+    	//query
 		SearchResponse response = client.prepareSearch(index).setQuery(finalQueryBuilder).setFrom(offset).setSize(limit).get();  
         for (SearchHit searchHit : response.getHits()) {  
         	responseStrList.add(searchHit.getSourceAsString());
@@ -537,55 +531,4 @@ public class ESRepository extends BaseRepository{
 		return responseStrList;
 	}
 	
-	//不要删除，留着备用
-	/*public static void getArticleInfoByTags(String tags, List<String> filterList)
-            throws Exception {
-        //
-        SearchRequestBuilder responsebuilder = client.prepareSearch("info")
-                .setTypes("articles")
-                .setSearchType(SearchType.QUERY_THEN_FETCH);
-
-        // 1. pics过滤
-        NestedQueryBuilder picsFilter = QueryBuilders.nestedQuery(
-                "pics",
-                QueryBuilders.boolQuery()
-                        .must(QueryBuilders.matchQuery("pics.is_down", "1"))
-                        .must(QueryBuilders.matchQuery("pics.is_qr", "0")),
-                ScoreMode.Avg);
-
-        // 2. 关键词权重计算过滤,过滤ID
-        // ---------keyword查询
-        NestedQueryBuilder kwIDsQuery = QueryBuilders.nestedQuery(
-                "keywords02",
-                QueryBuilders
-                        .boolQuery()
-                        .must(QueryBuilders.matchQuery("keywords02.keyword",
-                                tags).analyzer("xxxx_xxx_analyzer"))
-                        .mustNot(QueryBuilders.termsQuery("_id", filterList)),
-                ScoreMode.Avg);
-
-        // ---------权重分数函数
-        FilterFunctionBuilder[] keyWeithFunctionBuilders = { new FunctionScoreQueryBuilder.FilterFunctionBuilder(
-                // 这里把_score * doc['keywords02.weight'].value修改成了随机化            
-                ScoreFunctionBuilders.randomFunction(Math.round(Math.random() * 100))
-        ) };
-
-        // ---kw函数权重查询
-        FunctionScoreQueryBuilder query = QueryBuilders.functionScoreQuery(
-                kwIDsQuery, keyWeithFunctionBuilders);
-
-        // 综合查询
-        SearchResponse myresponse = responsebuilder.setQuery(query)
-                .setPostFilter(picsFilter)
-                .setCollapse(new CollapseBuilder("keywords01.raw")).setFrom(0)
-                .setSize(5).get();
-        System.out.println(myresponse.toString());
-        SearchHits hits = myresponse.getHits();
-        System.out.println(hits.totalHits);
-        for (int i = 0; i < hits.getHits().length; i++) {
-            String sourceAsString = hits.getHits()[i].getSourceAsString();
-            System.out.println(sourceAsString);
-        }
-    }*/
-
 }

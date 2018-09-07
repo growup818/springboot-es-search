@@ -100,4 +100,54 @@ public class ESAggsRepository extends BaseRepository {
 		return Integer.parseInt(bd.toString());
 	}
 
+	//不要删除，留着备用
+		/*public static void getArticleInfoByTags(String tags, List<String> filterList)
+	            throws Exception {
+	        //
+	        SearchRequestBuilder responsebuilder = client.prepareSearch("info")
+	                .setTypes("articles")
+	                .setSearchType(SearchType.QUERY_THEN_FETCH);
+
+	        // 1. pics过滤
+	        NestedQueryBuilder picsFilter = QueryBuilders.nestedQuery(
+	                "pics",
+	                QueryBuilders.boolQuery()
+	                        .must(QueryBuilders.matchQuery("pics.is_down", "1"))
+	                        .must(QueryBuilders.matchQuery("pics.is_qr", "0")),
+	                ScoreMode.Avg);
+
+	        // 2. 关键词权重计算过滤,过滤ID
+	        // ---------keyword查询
+	        NestedQueryBuilder kwIDsQuery = QueryBuilders.nestedQuery(
+	                "keywords02",
+	                QueryBuilders
+	                        .boolQuery()
+	                        .must(QueryBuilders.matchQuery("keywords02.keyword",
+	                                tags).analyzer("xxxx_xxx_analyzer"))
+	                        .mustNot(QueryBuilders.termsQuery("_id", filterList)),
+	                ScoreMode.Avg);
+
+	        // ---------权重分数函数
+	        FilterFunctionBuilder[] keyWeithFunctionBuilders = { new FunctionScoreQueryBuilder.FilterFunctionBuilder(
+	                // 这里把_score * doc['keywords02.weight'].value修改成了随机化            
+	                ScoreFunctionBuilders.randomFunction(Math.round(Math.random() * 100))
+	        ) };
+
+	        // ---kw函数权重查询
+	        FunctionScoreQueryBuilder query = QueryBuilders.functionScoreQuery(
+	                kwIDsQuery, keyWeithFunctionBuilders);
+
+	        // 综合查询
+	        SearchResponse myresponse = responsebuilder.setQuery(query)
+	                .setPostFilter(picsFilter)
+	                .setCollapse(new CollapseBuilder("keywords01.raw")).setFrom(0)
+	                .setSize(5).get();
+	        System.out.println(myresponse.toString());
+	        SearchHits hits = myresponse.getHits();
+	        System.out.println(hits.totalHits);
+	        for (int i = 0; i < hits.getHits().length; i++) {
+	            String sourceAsString = hits.getHits()[i].getSourceAsString();
+	            System.out.println(sourceAsString);
+	        }
+	    }*/
 }
